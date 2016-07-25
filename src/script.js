@@ -1,18 +1,19 @@
 var tbody = document.querySelector('tbody')
 
 var xhr = new XMLHttpRequest()
-xhr.open('GET', 'data.json')
+xhr.open('GET', 'http://api.randomuser.me/?results=50')
 xhr.addEventListener('load', didLoadData)
 xhr.send()
 
 function didLoadData () {
-  var foods = JSON.parse(xhr.responseText).foods
+  var people = JSON.parse(xhr.responseText).results
 
-  foods.forEach(function (food) {
+  people.forEach(function (person) {
     tbody.innerHTML += `
       <tr>
-        <td>${food.name}</td>
-        <td>${food.qty}</td>
+        <td><img src="${person.picture.thumbnail}"></td>
+        <td>${person.name.first} ${person.name.last}</td>
+        <td>${person.phone}</td>
       </tr>`
   })
 }
