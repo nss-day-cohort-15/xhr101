@@ -1,5 +1,3 @@
-var tbody = document.querySelector('tbody')
-
 // SYNCHRONOUS CALLBACKS
 // DIY SYNC forEach function (ARRAY: array, FUNCTION: callback)
 // callback function (OBJECT: currentValue)
@@ -8,6 +6,7 @@ function forEach (array, callback) {
   for (var i = 0; i < array.length; i++) {
     callback(array[i])
   }
+
 }
 
 // USAGE:
@@ -35,13 +34,19 @@ function getJSON (url, callback) {
 
 getJSON('http://api.randomuser.me/?results=50', function (data) {
   var people = data.results
+  var tbody = document.querySelector('tbody')
 
   people.forEach(function (person) {
-    tbody.innerHTML += `
-      <tr>
-        <td><img src="${person.picture.thumbnail}"></td>
-        <td>${person.name.first} ${person.name.last}</td>
-        <td>${person.phone}</td>
-      </tr>`
+    tbody.innerHTML += createRowHTML(person)
   })
 })
+
+function createRowHTML (person) {
+  return `
+    <tr>
+      <td><img src="${person.picture.thumbnail}"></td>
+      <td>${person.name.first} ${person.name.last}</td>
+      <td>${person.phone}</td>
+    </tr>
+  `
+}
